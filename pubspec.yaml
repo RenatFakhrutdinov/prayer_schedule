@@ -10,6 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
+  libpray:
+    git:
+      url: https://github.com/zulfahmi93/dart-libpray
 
 dev_dependencies:
   flutter_test:
