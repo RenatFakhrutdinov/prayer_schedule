@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:prayer_schedule/bloc/location/location_bloc.dart';
+import 'package:prayer_schedule/bloc/location/location_bloc_state.dart';
 
 class ScheduleScreen extends StatefulWidget {
   @override
@@ -28,7 +30,34 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       body: BlocBuilder(
         bloc: _locationBloc,
         builder: (context, state) {
-          return Text('$state');
+          if (state is LocationStateInit) {
+            return Center(
+              child: CupertinoActivityIndicator(),
+            );
+          }
+          if (state is LocationStateError) {
+            return Center(
+              child: Text(state.exception.toString()),
+            );
+          }
+          if (state is LocationStateDefined) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  state.userLocation.localName,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                Text('namaz times'),
+                SizedBox(
+                  height: ScreenUtil().setHeight(200),
+                  width: MediaQuery.of(context).size.width,
+                )
+              ],
+            );
+          }
+          return null;
         },
       ),
     );
