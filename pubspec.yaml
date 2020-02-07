@@ -15,10 +15,6 @@ dependencies:
   flutter_bloc: ^3.2.0
   flutter_cupertino_date_picker: ^1.0.12
   flutter_screenutil: ^1.0.2
-  libpray:
-    git:
-      url: https://github.com/zulfahmi93/dart-libpray
-
 
 dev_dependencies:
   flutter_test:
