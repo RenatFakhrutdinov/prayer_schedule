@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:prayer_schedule/bloc/location/location_bloc_state.dart';
-import 'package:prayer_schedule/bloc/location/user_location_model.dart';
+import 'package:prayer_schedule/bloc/location_bloc/location_bloc_state.dart';
+import 'package:prayer_schedule/model/user_location_model.dart';
 
 enum LocationEvent { fetchLocation }
 

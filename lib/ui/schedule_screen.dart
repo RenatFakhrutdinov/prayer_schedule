@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:prayer_schedule/bloc/location/location_bloc.dart';
-import 'package:prayer_schedule/bloc/location/location_bloc_state.dart';
+import 'package:prayer_schedule/bloc/location_bloc/location_bloc.dart';
+import 'package:prayer_schedule/bloc/location_bloc/location_bloc_state.dart';
+import 'package:prayer_schedule/prayer_time/prayer_time.dart';
 
 class ScheduleScreen extends StatefulWidget {
   @override
@@ -49,7 +50,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   state.userLocation.localName,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
-                Text('namaz times'),
+
+                Text('namaz times \n ${PrayerTime().getPrayerTimes(DateTime.now(), 60, 60, 0)}'),
                 SizedBox(
                   height: ScreenUtil().setHeight(200),
                   width: MediaQuery.of(context).size.width,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'bloc/location/location_bloc.dart';
+import 'bloc/location_bloc/location_bloc.dart';
 import 'res/colors.dart';
 import 'ui/schedule_screen.dart';
 
