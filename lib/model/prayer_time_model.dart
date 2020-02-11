@@ -1,5 +1,12 @@
 class PrayerTimeModel {
-  int mock;
+  String fajr, sunrise, dhuhr, asr, sunset, maghrib, isha;
 
-  PrayerTimeModel(this.mock);
+  PrayerTimeModel(
+      {this.fajr,
+      this.sunrise,
+      this.dhuhr,
+      this.asr,
+      this.sunset,
+      this.maghrib,
+      this.isha});
 }
