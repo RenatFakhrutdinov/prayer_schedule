@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:prayer_schedule/bloc/prayer_time_bloc/prayer_time_export.dart';
 import 'bloc/location_bloc/location_bloc.dart';
 import 'res/colors.dart';
 import 'ui/schedule_screen.dart';
@@ -15,6 +16,9 @@ void main() {
           BlocProvider<LocationBloc>(
             create: (BuildContext context) =>
                 LocationBloc()..add(LocationEvent.fetchLocation),
+          ),
+          BlocProvider<PrayerTimeBloc>(
+            create: (BuildContext context) => PrayerTimeBloc(),
           ),
         ],
         child: MaterialApp(

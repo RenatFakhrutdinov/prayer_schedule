@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:prayer_schedule/model/user_location_model.dart';
 
 abstract class PrayerTimeEvent extends Equatable {
   @override
@@ -7,5 +8,6 @@ abstract class PrayerTimeEvent extends Equatable {
 
 class PrayerTimeFetch extends PrayerTimeEvent {
   final DateTime date;
-  PrayerTimeFetch(this.date);
+  final UserLocation location;
+  PrayerTimeFetch(this.date, this.location);
 }

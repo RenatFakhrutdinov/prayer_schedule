@@ -8,6 +8,8 @@ class UserLocation {
   String localName;
   List<Placemark> placeMarks = List();
 
+  ///todo define timezone
+
   UserLocation(Position position, List<Placemark> places) {
     latitude = position.latitude;
     longitude = position.longitude;
