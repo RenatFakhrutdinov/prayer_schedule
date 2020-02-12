@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:prayer_schedule/bloc/location_bloc/location_bloc.dart';
 import 'package:prayer_schedule/bloc/location_bloc/location_bloc_state.dart';
+import 'package:prayer_schedule/model/prayer_time_model.dart';
 import 'package:prayer_schedule/prayer_time/prayer_time.dart';
 
 class ScheduleScreen extends StatefulWidget {
@@ -50,8 +51,14 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   state.userLocation.localName,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
-
-                Text('namaz times \n ${PrayerTime().getPrayerTimes(DateTime.now(), 60, 60, 0)}'),
+                Text(
+                    'namaz times \n ${PrayerTime().getPrayerTimes(DateTime.now(), 60, 60, 0)}'),
+                Text(PrayerTimeModel.fromDateAndCoordinates(
+                        date: DateTime.now(),
+                        latitude: 60,
+                        longitude: 60,
+                        timezone: 0)
+                    .asr),
                 SizedBox(
                   height: ScreenUtil().setHeight(200),
                   width: MediaQuery.of(context).size.width,
