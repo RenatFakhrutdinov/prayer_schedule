@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:prayer_schedule/bloc/location_bloc/location_bloc.dart';
 import 'package:prayer_schedule/bloc/location_bloc/location_bloc_state.dart';
-import 'package:prayer_schedule/model/prayer_time_model.dart';
-import 'package:prayer_schedule/prayer_time/prayer_time.dart';
+import 'package:prayer_schedule/bloc/prayer_time_bloc/prayer_time_export.dart';
 
 class ScheduleScreen extends StatefulWidget {
   @override
@@ -13,12 +12,24 @@ class ScheduleScreen extends StatefulWidget {
 }
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
+  PrayerTimeBloc _prayerTimeBloc;
   LocationBloc _locationBloc;
 
   @override
   void initState() {
     super.initState();
-    _locationBloc = BlocProvider.of<LocationBloc>(context);
+    _prayerTimeBloc = BlocProvider.of<PrayerTimeBloc>(context);
+    _locationBloc = BlocProvider.of<LocationBloc>(context)
+      ..listen(
+        (state) {
+          ///checking for getting coordinates
+          if (state is LocationStateDefined) {
+            ///when we get coordinates we'll dispatch PrayerTimeBloc
+            _prayerTimeBloc
+                .add(PrayerTimeFetch(DateTime.now(), state.userLocation));
+          }
+        },
+      );
   }
 
   @override
@@ -51,14 +62,17 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   state.userLocation.localName,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
-                Text(
-                    'namaz times \n ${PrayerTime().getPrayerTimes(DateTime.now(), 60, 60, 0)}'),
-                Text(PrayerTimeModel.fromDateAndCoordinates(
-                        date: DateTime.now(),
-                        latitude: 60,
-                        longitude: 60,
-                        timezone: 0)
-                    .asr),
+                BlocBuilder(
+                  bloc: _prayerTimeBloc,
+                  builder: (context, prayerState) {
+                    if (prayerState is PrayerTimeLoaded) {
+                      return Text(prayerState.model.asr);
+                    } else if (prayerState is PrayerTimeError) {
+                      return Text('something went wrong');
+                    } else
+                      return CupertinoActivityIndicator();
+                  },
+                ),
                 SizedBox(
                   height: ScreenUtil().setHeight(200),
                   width: MediaQuery.of(context).size.width,

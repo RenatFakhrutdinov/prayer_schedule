@@ -17,7 +17,10 @@ class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
             latitude: event.location.latitude,
             longitude: event.location.longitude,
             timezone: 0);
-        yield PrayerTimeLoaded(model);
+        if (model == null) {
+          yield PrayerTimeEmpty();
+        } else
+          yield PrayerTimeLoaded(model);
       } catch (e) {
         print("PrayerTimeBloc error: $e");
         yield PrayerTimeError();
