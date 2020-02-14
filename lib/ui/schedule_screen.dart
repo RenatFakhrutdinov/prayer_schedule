@@ -1,3 +1,4 @@
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:prayer_schedule/bloc/location_bloc/location_bloc.dart';
 import 'package:prayer_schedule/bloc/location_bloc/location_bloc_state.dart';
 import 'package:prayer_schedule/bloc/prayer_time_bloc/prayer_time_export.dart';
+import 'package:prayer_schedule/model/user_location_model.dart';
 import 'package:prayer_schedule/res/colors.dart';
 
 class ScheduleScreen extends StatefulWidget {
@@ -17,6 +19,7 @@ class ScheduleScreen extends StatefulWidget {
 class _ScheduleScreenState extends State<ScheduleScreen> {
   PrayerTimeBloc _prayerTimeBloc;
   LocationBloc _locationBloc;
+  UserLocation _location;
 
   @override
   void initState() {
@@ -30,6 +33,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             ///when we get coordinates we'll dispatch PrayerTimeBloc
             _prayerTimeBloc
                 .add(PrayerTimeFetch(DateTime.now(), state.userLocation));
+
+            ///keep user location
+            _location = state.userLocation;
           }
         },
       );
@@ -73,7 +79,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                         children: <Widget>[
                           Card(
                             child: InkWell(
-                              onTap: () => print('tapped'),
+                              onTap: () => _showDatePicker(),
                               child: Padding(
                                 padding: EdgeInsets.all(8),
                                 child: Column(
@@ -230,5 +236,20 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         },
       ),
     );
+  }
+
+  void _showDatePicker() {
+    DatePicker.showDatePicker(context,
+        pickerTheme: DateTimePickerTheme(
+          backgroundColor: AppColors.neutral,
+          confirm: Icon(Icons.check, color: AppColors.qiblaBlue),
+          cancel: Icon(
+            Icons.clear,
+            color: Colors.redAccent,
+          ),
+        ),
+        initialDateTime: DateTime.now(), onConfirm: (day, List<int> index) {
+      _prayerTimeBloc.add(PrayerTimeFetch(day, _location));
+    });
   }
 }
