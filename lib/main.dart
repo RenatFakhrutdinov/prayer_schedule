@@ -22,7 +22,6 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          debugShowCheckedModeBanner: false,
           theme: ThemeData(
               primaryColor: AppColors.neutral,
               highlightColor: Colors.transparent,
