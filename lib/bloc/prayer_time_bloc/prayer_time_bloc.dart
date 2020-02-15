@@ -16,7 +16,7 @@ class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
             date: event.date,
             latitude: event.location.latitude,
             longitude: event.location.longitude,
-            timezone: 0);
+            timezone: event.date.timeZoneOffset.inHours.toDouble());
         if (model == null) {
           yield PrayerTimeEmpty();
         } else
